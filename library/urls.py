@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from DjangoIntro.DjangoSDA.books.views import get_hello, get_uuids_a
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', get_hello),
+    path('uuids-a', get_uuids_a),
 ]
