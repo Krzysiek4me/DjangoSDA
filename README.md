@@ -1,0 +1,2 @@
+# DjangoSDA
+Django SDA zadania
