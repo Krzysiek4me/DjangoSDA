@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html"%}
+{% block content %}
+    {& if request.method == "GET"&}
+    <Li>THis is GET.</Li>
+    {& if request.method == "POST"&}
+    <Li>THis is POST.</Li>
+    {& if request.method == "PUT"&}
+    <Li>THis is PUT.</Li>
+    {& if request.method == "DELETE"&}
+    <Li>THis is DELETE.</Li>
+    {& endif &}
+{% endblock %}

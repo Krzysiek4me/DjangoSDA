@@ -18,7 +18,8 @@ def get_hello(request: WSGIRequest) -> HttpResponse:
 
 def get_uuids_a(request: WSGIRequest) -> HttpResponse:
     uuids = [f"{uuid4()}" for _ in range(10)]
-    return HttpResponse(f"uuids{uuids}")
+    return render(request, template_name="dowolna_nazwa.html", context={"elements":uuids})
+    #return HttpResponse(f"uuids{uuids}")
 
 def get_uuids_b(request: WSGIRequest) -> JsonResponse:
     uuids = [f"{uuid4()}" for _ in range(10)]
@@ -41,16 +42,17 @@ def get_argument_from_query(request: WSGIRequest) -> HttpResponse:
 
 @csrf_exempt
 def check_http_query_type(request: WSGIRequest) -> HttpResponse:
-    query_type = "unknown"
-    if request.method == "GET":
-        query_type = "this is GET"
-    elif request.method == "POST":
-        query_type = "this is POST"
-    elif request.method == "PUT":
-        query_type = "this is PUT"
-    elif request.method == "DELETE":
-        query_type = "this is DELETE"
-    return HttpResponse(query_type)
+    # query_type = "unknown"
+    # if request.method == "GET":
+    #     query_type = "this is GET"
+    # elif request.method == "POST":
+    #     query_type = "this is POST"
+    # elif request.method == "PUT":
+    #     query_type = "this is PUT"
+    # elif request.method == "DELETE":
+    #     query_type = "this is DELETE"
+    # return HttpResponse(query_type)
+    return render(request, template_name="methods.html", context={})
 
 # 21. Dodaj admin panel tylko dla flagi DEBUG w settings
 
