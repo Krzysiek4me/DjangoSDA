@@ -9,7 +9,8 @@ from uuid import uuid4
 
 
 def get_hello(request: WSGIRequest) -> HttpResponse:
-    return HttpResponse("hello world")
+    hello = "hello world!"
+    return render(request, template_name="hello_world.html", context={"hello_var": hello})
 
 # 12. Utwórz funkcję zwracającą listę stringów. Stringi niech będą losowym UUID dodawanym do listy. Lista niech posiada 10 elementów.
 #     a) Zwróć listę jako HTTPResponse (musisz na liście zrobić json.dumps)
