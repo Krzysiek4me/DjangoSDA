@@ -1,12 +1,71 @@
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from uuid import uuid4
+
 from django.core.exceptions import BadRequest
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.views import View
+from django.shortcuts import render, get_object_or_404
+
+from books.models import BookAuthor, Book, Category
+
+
+class AuthorListBaseView(View):
+    template_name = "author_list.html"
+    queryset = BookAuthor.objects.all() #type: ignore
+
+    def get(self, request: WSGIRequest, *args, **kwargs):
+        context = {"authors": self.queryset}
+        return render(request, template_name=self.template_name, context=context)
+
+class CategoryListTemplateView(TemplateView):
+    template_name = "category_list.html"
+    extra_context = {"categories": Category.objects.all()}  # type: ignore
+
+class BooksListView(ListView):
+    template_name = "books_list.html"
+    model = Book
+    paginate_by = 10
+
+class BookDetailView(DetailView):
+    template_name = "book_detail.html"
+    model = Book
+    def get_object(self, **kwargs):
+        return get_object_or_404(Book, id=self.kwargs.get("pk"))
 
 # 11. Utwórz pierwszą funkcję widoku drukująca/zwracająca hello world (pamietaj dodać ją do urls.py - moesz ustawić jej name).
 from django.views.decorators.csrf import csrf_exempt
 from uuid import uuid4
 
+
+class BookForm:
+    pass
+
+
+class BookCreateView(CreateView):
+    template_name = "book_form.html"
+    form_class = BookForm
+    success_url = reverse_lazy("books_list")
+
+    # def get_success_url(self):
+    #     return reverse_lazy("books_list")
+
+class BookUpdateView(UpdateView):
+    template_name = "book_form.html"
+    form_class = BookForm
+    success_url = reverse_lazy("books_list")
+
+    def get_object(self, **kwargs):
+        return get_object_or_404(Book, id=self.kwargs.get("pk"))
+
+class BookDeleteView(DeleteView):
+    template_name = "book_form.html"
+    model = Book
+    success_url = reverse_lazy("books_list")
+
+    def get_object(self, **kwargs):
+        return get_object_or_404(Book, id=self.kwargs.get("pk"))
 
 def get_hello(request: WSGIRequest) -> HttpResponse:
     hello = "hello world!"

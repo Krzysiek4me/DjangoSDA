@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from DjangoIntro.DjangoSDA.books.views import get_hello, get_uuids_a, get_uuids_b, get_argument_from_path, \
-    get_argument_from_query, check_http_query_type, get_headers, raise_error_for_fun
+from books.views import get_hello, get_uuids_a, get_uuids_b, get_argument_from_path, \
+    get_argument_from_query, check_http_query_type, get_headers, raise_error_for_fun, AuthorListBaseView, \
+    CategoryListTemplateView, BooksListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,9 @@ urlpatterns = [
     path('http-args', check_http_query_type, name="get_from_type"),
     path('get-headers', get_headers, name="get_headers"),
     path('raise-error', raise_error_for_fun, name="raise_error"),
+    path('author-list', AuthorListBaseView.as_view(), name="author-list"),
+    path('category-list', CategoryListTemplateView.as_view(), name="category-list"),
+    path('books-list', BooksListView.as_view(), name="books-list"),
 ]
 
 # if settings.DEBUG:

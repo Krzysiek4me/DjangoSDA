@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 
-from DjangoIntro.DjangoSDA.books.views import get_hello, get_uuids_a, get_uuids_b, get_argument_from_path, \
-    get_argument_from_query, check_http_query_type, get_headers, raise_error_for_fun
+from books.views import get_hello, get_uuids_a, get_uuids_b, get_argument_from_path, \
+    get_argument_from_query, check_http_query_type, get_headers, raise_error_for_fun, AuthorListBaseView, \
+    CategoryListTemplateView, BooksListView, BookDetailView,CategoryCreateFormView, AuthorCreateView, \
+    AuthorUpdateView, BooksCreateView, BooksUpdateView, BooksDeleteView
+
+
 
 urlpatterns = [
     path('uuids-a', get_uuids_a),
@@ -26,4 +30,14 @@ urlpatterns = [
     path('http-args', check_http_query_type, name="get_from_type"),
     path('get-headers', get_headers, name="get_headers"),
     path('raise-error', raise_error_for_fun, name="raise_error"),
+    path('author-list', AuthorListBaseView.as_view(), name="author_list"),
+    path('category-list', CategoryListTemplateView.as_view(), name="category_list"),
+    path('books-list', BooksListView.as_view(), name="books_list"),
+    path('books-create', BooksCreateView.as_view(), name="book_create"),
+    path('books-update/<int:pk>/', BooksUpdateView.as_view(), name="book_update"),
+    path('books-delete/<int:pk>/', BooksDeleteView.as_view(), name="book_delete"),
+    path('book-details/<int:pk>/', BookDetailView.as_view(), name="book_details"),
+    path('category-create/', CategoryCreateFormView.as_view(), name="category_create"),
+    path('author-create/', AuthorCreateView.as_view(), name="author_create"),
+    path('author-update/<int:pk>/', AuthorUpdateView.as_view(), name="author_update"),
 ]
