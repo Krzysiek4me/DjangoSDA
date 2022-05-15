@@ -3,9 +3,10 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('', get_hello, name='home'),
-    path('books/', include('books.urls')),
+    path('books/', include('books.urls')), #przekierowanie endpointów do ścieżki books\urls - sprzatanie
     path('users/', include('users.urls')),
 
 ]

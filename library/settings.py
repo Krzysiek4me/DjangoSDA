@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7l9p0us%f%01@7xz-!@24rx&(!rcj8!a!qpk&k1g*-6qps3nm$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False #sprawdzić
 
 ALLOWED_HOSTS = ["*"]
 
@@ -52,6 +52,21 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'library.urls'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
+
 
 TEMPLATES = [
     {

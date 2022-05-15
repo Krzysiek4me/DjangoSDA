@@ -14,14 +14,14 @@ from books.forms import CategoryForm, logger, AuthorForm, BookForm
 from books.models import BookAuthor, Category, Book
 import logging
 
-logger = logging.getLogger("krzysieq")
+logger = logging.getLogger(__name__)
 
 class AuthorListBasedView(View):
     template_name = "author_list.html"
     queryset = BookAuthor.objects.all()  # type: ignore
 
     def get(self, request: WSGIRequest, *args, **kwargs):
-        logger.debug(f"Dupa! {request}")
+        logger.debug(f"WTF! {request}")
         context = {"authors": self.queryset}
         return render(request, template_name=self.template_name, context=context)
 
@@ -98,7 +98,10 @@ class BookUpdateView(DeleteView):
 class BookDeleteView(DeleteView):
     template_name = "book_delete.html"
     model = Book
-    success_url = reverse_lazy("book_list")
+    # success_url = reverse_lazy("book_list")
+
+    def get_success_url(self):
+        return reverse_lazy("books-list")
 
     def get_object(self, **kwargs):
         return get_object_or_404(Book, id=self.kwargs.get("pk"))
@@ -106,7 +109,7 @@ class BookDeleteView(DeleteView):
 #11
 @login_required
 def get_hello(request: WSGIRequest) -> HttpResponse:
-    user = request.user  # type: ignore
+    user: User = request.user  # type: ignore
     # password = None if user.is_anonymous else user.password
     # email = None if user.is_anonymous else user.email
     # date_joined = None if user.is_anonymous else user.date_joined
@@ -115,7 +118,7 @@ def get_hello(request: WSGIRequest) -> HttpResponse:
     #     return HttpResponseRedirect(reverse('login'))
     is_auth: bool = user.is_authenticated
     hello = f"Hello {user.username}. That's your password: {user.password}, your email {user.email} and date you joined: {user.date_joined}"
-    return render(request, template_name="hello_world.html", context={"hello_var":hello})
+    return render(request, template_name="hello_world.html", context={"hello_var":hello, "is_authenticated": is_auth} )
 
 # 12. Utwórz funkcję zwracającą listę stringów. Stringi niech będą losowym UUID dodawanym do listy. Lista niech posiada 10 elementów.
 #
